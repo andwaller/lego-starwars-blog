@@ -7,11 +7,15 @@ title: "The Skill in Action: From CSV to Star Wars Graph with Claude Code and Ze
 *Part 2 of From Star Wars LEGO to my first open source contribution*
 
 
-Part 1 ended with a merged pull request. PR #32 landed in `neo4j-contrib/neo4j-skills` on June 7th, and the schema guardrail I'd built to load Star Wars LEGO data into Neo4j was now part of the official cypher skill.
+If you read [Part 1](https://medium.com/neo4j/from-star-wars-lego-to-my-first-open-source-contribution-98862f6ffcd3), you know how this started: I wanted to build a Star Wars LEGO database, my AI agent kept hallucinating schema that didn't exist, and fixing that problem turned into my first open source contribution to `neo4j-contrib/neo4j-skills`.
 
-What I didn't show was the actual workflow. The blog told the story of how the contribution happened. It didn't show you how to use it.
+That post told the story. This one shows the work.
 
-This post does that â€” live, in order, including the roadblocks. From a blank Zed window to a queryable Star Wars graph, using Claude Code running as a Terminal Thread alongside the project. No Cypher knowledge required.
+Here's why it's worth following along: if you've ever asked an AI agent to help you build a database and ended up with queries that run but return nothing — because the labels are wrong, the relationship types are invented, the properties don't match — this is the workflow that solves that. The agent reads a schema file before writing a single line of Cypher. You define it once from your own data. Everything after is validated against it.
+
+I'm not an engineer. I did this entirely in plain English, with Claude Code running alongside the project in Zed. No Cypher knowledge required — I still don't have any.
+
+Now let's walk through it.
 
 
 ## What the contribution actually did â€” in plain English
