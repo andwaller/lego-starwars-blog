@@ -1,3 +1,7 @@
+---
+title: "The Skill in Action: From CSV to Star Wars Graph with Claude Code and Zed"
+---
+
 # The Skill in Action: From CSV to Star Wars Graph with Claude Code and Zed
 
 *Part 2 of From Star Wars LEGO to my first open source contribution*
