@@ -75,12 +75,7 @@ npx skills add neo4j-contrib/neo4j-skills/neo4j-cypher-skill
 <figcaption>The list includes Amp, Cline, Cursor, Codex, Gemini CLI, Zed, and others. Select Zed -- the skill will wire itself in automatically.</figcaption>
 </figure>
 
-<div class="instruction"><span class="step-label">d</span> When asked for installation scope, choose <strong>Project</strong>.</div>
-
-<figure>
-<img src="ss03-scope-select.png" alt="Installation scope selection showing Project selected">
-<figcaption>Project scope: the skill travels with your repository. Anyone who clones it gets the same agent behavior.</figcaption>
-</figure>
+<div class="instruction"><span class="step-label">d</span> When asked for installation scope, choose <strong>Project</strong>. The skill travels with your repository -- anyone who clones it gets the same agent behavior.</div>
 
 The CLI runs a security assessment before installing. When it completes, the skill is ready.
 
@@ -110,21 +105,7 @@ That schema diagram is worth a moment. It shows the relational shape of the data
 </ul>
 </div>
 
-<figure>
-<img src="ss06-csvs-downloaded.png" alt="Five CSV zip files downloaded in the browser">
-<figcaption>Five files, all under 500KB each. The entire LEGO dataset fits in under 2MB.</figcaption>
-</figure>
-
 <div class="instruction"><span class="step-label">b</span> Create a folder called <code>lego-starwars-csvs</code>. Move the five zip files in. Select all with <strong>Ctrl+A</strong>, right-click, and choose <strong>Extract All</strong> into the same folder.</div>
-
-<figure>
-<img src="ss07-csvs-folder.png" alt="Windows Explorer showing lego-starwars-csvs folder with five zip files">
-</figure>
-
-<figure>
-<img src="ss08-csvs-extracted.png" alt="Five CSV files extracted and ready">
-<figcaption>All five CSVs extracted and ready.</figcaption>
-</figure>
 
 <div class="instruction"><span class="step-label">c</span> Open the folder in Zed with <strong>Ctrl+K, Ctrl+O</strong> and select <code>lego-starwars-csvs</code>.</div>
 
@@ -142,10 +123,6 @@ That's the gap the PR fills. Without a schema file, the cypher skill infers the 
 <div class="instruction"><span class="step-label">a</span> Open Zed's terminal with <code>Ctrl+`</code>, type <code>claude</code>, and hit Enter.</div>
 
 <figure>
-<img src="ss10-terminal-claude-typed.png" alt="Zed terminal with claude typed and ready to launch">
-</figure>
-
-<figure>
 <img src="ss11-claude-code-welcome.png" alt="Claude Code welcome screen showing version, model, and working directory">
 <figcaption>Claude Code v2.1.181, Sonnet 4.6, working directory lego-starwars-csvs. Ready.</figcaption>
 </figure>
@@ -157,10 +134,6 @@ Use define_schema.py from the neo4j-cypher-skill to define a schema
 for a Star Wars LEGO graph database using the CSV files in this project. 
 I want nodes for Theme, Set, and Minifig with relationships between them.
 ```
-
-<figure>
-<img src="ss12-define-schema-prompt.png" alt="Claude Code showing the prompt typed and ready">
-</figure>
 
 Claude Code reads the CSVs, builds the graph model, and asks permission to write `lego-starwars-schema.json`.
 
@@ -204,19 +177,11 @@ This is the kind of thing that costs an hour of Stack Overflow searching if you 
 
 <div class="instruction"><span class="step-label">a</span> Go to <a href="https://console.neo4j.io">console.neo4j.io</a> and sign up with Google or GitHub. No credit card required.</div>
 
-<figure>
-<img src="ss18-aura-signup.png" alt="Neo4j Aura signup page showing free sign up options">
-</figure>
-
 The onboarding builds a live graph of your answers as you fill in the form -- you're already thinking in nodes and relationships before you've written a single line of Cypher.
 
 <figure>
 <img src="ss19-aura-onboarding-graph.png" alt="Aura onboarding showing a graph being built from form answers">
 <figcaption>Aura builds a graph of your onboarding answers in real time. A nice preview of what's coming.</figcaption>
-</figure>
-
-<figure>
-<img src="ss20-aura-console-getstarted.png" alt="Aura console Get Started screen">
 </figure>
 
 <div class="instruction"><span class="step-label">b</span> Go to <strong>Instances &rarr; Create instance</strong> and select <strong>Free</strong>.</div>
@@ -227,10 +192,6 @@ The onboarding builds a live graph of your answers as you fill in the form -- yo
 </figure>
 
 <div class="instruction"><span class="step-label">c</span> Name your instance <code>StarWars_Lego_DB</code> and click <strong>Create</strong>.</div>
-
-<figure>
-<img src="ss23-instance-name.png" alt="Instance name field showing StarWars_Lego_DB">
-</figure>
 
 <div class="instruction"><span class="step-label">d</span> &#9888;&#65039; <strong>Critical:</strong> Aura shows your password exactly once. Click <strong>Download and continue</strong> before closing this screen -- the downloaded file has your URI, username, and password.</div>
 
@@ -248,17 +209,7 @@ Within about 60 seconds your instance is running.
 
 ## Step 6: Run the import
 
-<div class="instruction"><span class="step-label">a</span> Back in Claude Code, tell it to run the import against your instance, then select <strong>Neo4j AuraDB</strong>.</div>
-
-<figure>
-<img src="ss26-claude-code-instance-type.png" alt="Claude Code asking for instance type with Neo4j AuraDB option">
-</figure>
-
-<div class="instruction"><span class="step-label">b</span> Select <strong>"I'll provide credentials now"</strong> and paste in your URI, username, and password from the downloaded credentials file.</div>
-
-<figure>
-<img src="ss27-claude-code-auth-method.png" alt="Claude Code asking for auth method">
-</figure>
+<div class="instruction"><span class="step-label">a</span> Back in Claude Code, tell it to run the import against your instance. Select <strong>Neo4j AuraDB</strong>, then <strong>"I'll provide credentials now"</strong> and paste in your URI, username, and password from the downloaded credentials file.</div>
 
 Claude Code runs `import_aura.py` and reports back.
 
@@ -274,11 +225,6 @@ Claude Code runs `import_aura.py` and reports back.
 <figcaption>44,678 nodes. 50,937 relationships. Every label and relationship type exactly as defined in the schema file.</figcaption>
 </figure>
 
-<figure>
-<img src="ss30-verification-query.png" alt="Verification query results showing counts matching the import report">
-<figcaption>Every count matches exactly.</figcaption>
-</figure>
-
 ## Step 7: These aren't the Star Wars themes you're looking for
 
 The Rebrickable CSVs contain every LEGO set ever made. We only want Star Wars.
@@ -288,10 +234,6 @@ The Rebrickable CSVs contain every LEGO set ever made. We only want Star Wars.
 ```
 Find all themes in the database that are related to Star Wars
 ```
-
-<figure>
-<img src="ss31-starwars-theme-query-running.png" alt="Claude Code running the Star Wars theme query">
-</figure>
 
 It wrote and ran a graph traversal query using the `HAS_PARENT` relationship hierarchy. Initial result: 2 themes. I pushed back -- I knew there were more than two.
 
