@@ -18,18 +18,18 @@ I'm not an engineer. I did this entirely in plain English, with Claude Code runn
 Now let's walk through it.
 
 
-## What the contribution actually did â€” in plain English
+## What the contribution actually did — in plain English
 
 The Neo4j cypher skill already knew how to write Cypher. What it didn't have was a way to work when there was no database to learn from.
 
-The skill needs a live connection to read the schema â€” what nodes exist, what relationships exist, what properties they have. Without that, it guesses. And as I showed in Part 1, it guesses wrong. It wrote `:Minifigure` when the label was `:Minifig`. It wrote `:CONTAINS` when the relationship was `:HAS_MINIFIG`. Plausible. Incorrect. No way to know the difference without a schema.
+The skill needs a live connection to read the schema — what nodes exist, what relationships exist, what properties they have. Without that, it guesses. And as I showed in Part 1, it guesses wrong. It wrote `:Minifigure` when the label was `:Minifig`. It wrote `:CONTAINS` when the relationship was `:HAS_MINIFIG`. Plausible. Incorrect. No way to know the difference without a schema.
 
 What PR #32 added was simple: **read the schema from a file first.** Before the database exists. Before you've written a single import script. Before you know anything about Cypher yourself.
 
 That one change means a complete beginner can now:
 
 - Describe their data in plain English and get a schema file written from their CSVs automatically
-- Have every Cypher query validated against it â€” labels, relationships, properties, directions
+- Have every Cypher query validated against it — labels, relationships, properties, directions
 - Import their data correctly the first time
 - Query it in plain English without knowing the query language
 
@@ -40,19 +40,19 @@ That's what this post is actually showing.
 
 ## What you need
 
-Everything in this walkthrough is free. I know because I checked before I started â€” I wasn't building something that required a subscription or a credit card to follow along.
+Everything in this walkthrough is free. I know because I checked before I started — I wasn't building something that required a subscription or a credit card to follow along.
 
-**Zed** â€” the code editor we're using. Download at [zed.dev](https://zed.dev). Available on macOS, Windows, and Linux.
+**Zed** — the code editor we're using. Download at [zed.dev](https://zed.dev). Available on macOS, Windows, and Linux.
 
-**Node.js / npm** â€” required to run the `npx skills add` command. Download at [nodejs.org](https://nodejs.org) (LTS version). If you're not sure whether you have it, open a terminal and type `node --version` â€” if you get a version number, you're good.
+**Node.js / npm** — required to run the `npx skills add` command. Download at [nodejs.org](https://nodejs.org) (LTS version). If you're not sure whether you have it, open a terminal and type `node --version` — if you get a version number, you're good.
 
-**Python** â€” required to run the import scripts. Download at [python.org](https://python.org) (version 3.8 or later). Check with `python --version` in your terminal.
+**Python** — required to run the import scripts. Download at [python.org](https://python.org) (version 3.8 or later). Check with `python --version` in your terminal.
 
-**Claude Code** â€” the AI agent that does the heavy lifting. Install instructions at [claude.ai/code](https://claude.ai/code). Requires a Claude Pro or API account.
+**Claude Code** — the AI agent that does the heavy lifting. Install instructions at [claude.ai/code](https://claude.ai/code). Requires a Claude Pro or API account.
 
-**Neo4j Aura Free** â€” your free cloud graph database. Sign up at [console.neo4j.io](https://console.neo4j.io). No credit card required. We'll create the instance together in Step 5 â€” just have your account ready.
+**Neo4j Aura Free** — your free cloud graph database. Sign up at [console.neo4j.io](https://console.neo4j.io). No credit card required. We'll create the instance together in Step 5 — just have your account ready.
 
-**The Rebrickable CSVs** â€” free to download at [rebrickable.com/downloads](https://rebrickable.com/downloads). We'll walk through exactly which files to grab in the next section.
+**The Rebrickable CSVs** — free to download at [rebrickable.com/downloads](https://rebrickable.com/downloads). We'll walk through exactly which files to grab in the next section.
 
 That's the whole list. No local database, no server, no infrastructure to manage.
 
@@ -68,11 +68,11 @@ npx skills add neo4j-contrib/neo4j-skills/neo4j-cypher-skill
 
 <figure>
 <img src="ss01-install-command.png" alt="Zed terminal showing the npx skills add command with install prompt">
-<figcaption>Installing the neo4j-cypher-skill directly from Zed's built-in terminal â€” no context switching required.</figcaption>
+<figcaption>Installing the neo4j-cypher-skill directly from Zed's built-in terminal — no context switching required.</figcaption>
 </figure>
 
 
-The `skills` CLI is interactive. It asks which agents to install to â€” the list includes Amp, Cline, Cursor, Codex, Gemini CLI, Zed, and others.
+The `skills` CLI is interactive. It asks which agents to install to — the list includes Amp, Cline, Cursor, Codex, Gemini CLI, Zed, and others.
 
 
 <figure>
@@ -81,7 +81,7 @@ The `skills` CLI is interactive. It asks which agents to install to â€” the
 </figure>
 
 
-Then it asks for installation scope â€” Project (committed with your codebase) or Global.
+Then it asks for installation scope — Project (committed with your codebase) or Global.
 
 
 <figure>
@@ -102,7 +102,7 @@ Before installing, the CLI runs a security assessment automatically.
 
 ## Step 2: Get the data
 
-The dataset comes from [Rebrickable](https://rebrickable.com/downloads/) â€” a community-maintained LEGO database with every official set, minifigure, part, and color as freely downloadable CSVs. No account required, updated daily.
+The dataset comes from [Rebrickable](https://rebrickable.com/downloads/) — a community-maintained LEGO database with every official set, minifigure, part, and color as freely downloadable CSVs. No account required, updated daily.
 
 
 <figure>
@@ -113,7 +113,7 @@ The dataset comes from [Rebrickable](https://rebrickable.com/downloads/) â€�
 
 That schema diagram is worth a moment. It shows the relational shape of the data: sets belong to themes, inventories link sets to their minifigs. This is exactly what we're going to turn into a graph.
 
-Download these five files â€” click **zip** next to each:
+Download these five files — click **zip** next to each:
 
 - `themes.csv`
 - `sets.csv`
@@ -128,7 +128,7 @@ Download these five files â€” click **zip** next to each:
 </figure>
 
 
-Create a folder called `lego-starwars-csvs`. Move the zips in. Select all five with **Ctrl+A**, right-click â†’ **Extract All** into the same folder.
+Create a folder called `lego-starwars-csvs`. Move the zips in. Select all five with **Ctrl+A**, right-click → **Extract All** into the same folder.
 
 
 <figure>
@@ -148,12 +148,12 @@ Now open the folder in Zed with **Ctrl+K, Ctrl+O** and select the `lego-starwars
 
 <figure>
 <img src="ss09-zed-project-open.png" alt="Zed project sidebar showing five CSV files with database icons">
-<figcaption>Project open in Zed. Five CSVs in the sidebar â€” Zed recognises them as structured data.</figcaption>
+<figcaption>Project open in Zed. Five CSVs in the sidebar — Zed recognises them as structured data.</figcaption>
 </figure>
 
 
 
-## Step 3: Define the schema â€” before the database exists
+## Step 3: Define the schema — before the database exists
 
 Open Zed's terminal with `` Ctrl+` ``, type `claude`, hit Enter.
 
@@ -172,7 +172,7 @@ Open Zed's terminal with `` Ctrl+` ``, type `claude`, hit Enter.
 
 **And to be clear about what's happening here: there is no Neo4j database running.** No Aura instance, no local server, no connection string. Just CSV files and the skill.
 
-That's the gap the PR fills. Without a schema file, the cypher skill infers the schema â€” which is where hallucinated labels and wrong relationship types come from. With a schema file, every query is validated before it runs.
+That's the gap the PR fills. Without a schema file, the cypher skill infers the schema — which is where hallucinated labels and wrong relationship types come from. With a schema file, every query is validated before it runs.
 
 Type this prompt:
 
@@ -197,7 +197,7 @@ Claude Code reads the CSVs, builds the graph model, and asks permission to write
 </figure>
 
 
-Hit **Yes**. It writes the file and explains what it modelled and why â€” including the key insight that `inventories` and `inventory_minifigs` are join tables that become the `INCLUDES_MINIFIG` relationship with quantity as its property, not separate nodes.
+Hit **Yes**. It writes the file and explains what it modelled and why — including the key insight that `inventories` and `inventory_minifigs` are join tables that become the `INCLUDES_MINIFIG` relationship with quantity as its property, not separate nodes.
 
 
 <figure>
@@ -209,10 +209,10 @@ Hit **Yes**. It writes the file and explains what it modelled and why â€” i
 
 **No database. No connection string. No server running.**
 
-The schema file now exists. Every Cypher query Claude Code generates from this point forward is validated against it â€” not guessed.
+The schema file now exists. Every Cypher query Claude Code generates from this point forward is validated against it — not guessed.
 
 
-## Step 4: The Empire Strikes Back â€” the first roadblock
+## Step 4: The Empire Strikes Back — the first roadblock
 
 Claude Code also wrote `import.cypher` alongside the schema. When you prompt it to run that against a live instance, it stops before executing a single line:
 
@@ -223,12 +223,12 @@ Claude Code also wrote `import.cypher` alongside the schema. When you prompt it 
 </figure>
 
 
-`LOAD CSV` with `file:///` paths works against a local Neo4j instance because the database can read your disk. AuraDB is cloud-hosted â€” it has no access to your local filesystem. Rather than fail, Claude Code reasoned through it and pivoted entirely:
+`LOAD CSV` with `file:///` paths works against a local Neo4j instance because the database can read your disk. AuraDB is cloud-hosted — it has no access to your local filesystem. Rather than fail, Claude Code reasoned through it and pivoted entirely:
 
 
 <figure>
 <img src="ss17-python-pivot.png" alt="Claude Code writing import_aura.py using the Python neo4j driver">
-<figcaption>Python + the Neo4j driver is already installed. Claude Code rewrote the import as 187 lines of batched UNWIND + MERGE â€” reads CSVs locally, pushes data through the driver. No file path problem.</figcaption>
+<figcaption>Python + the Neo4j driver is already installed. Claude Code rewrote the import as 187 lines of batched UNWIND + MERGE — reads CSVs locally, pushes data through the driver. No file path problem.</figcaption>
 </figure>
 
 
@@ -246,7 +246,7 @@ Head to [console.neo4j.io](https://console.neo4j.io). No credit card required.
 </figure>
 
 
-The onboarding builds a live graph of your answers as you fill in the form â€” you're already thinking in nodes and relationships before you've written a single line of Cypher.
+The onboarding builds a live graph of your answers as you fill in the form — you're already thinking in nodes and relationships before you've written a single line of Cypher.
 
 
 <figure>
@@ -263,12 +263,12 @@ Once through onboarding you land in the Aura console:
 </figure>
 
 
-Go to **Instances â†’ Create instance** and select **Free**:
+Go to **Instances → Create instance** and select **Free**:
 
 
 <figure>
 <img src="ss22-aura-free-tier.png" alt="Aura instance tier selection showing Free tier selected at $0/hour">
-<figcaption>AuraDB Free: up to 200k nodes and 400k relationships. $0/hour. Note: auto-deleted after 30 days of inactivity â€” keep it active or export your data.</figcaption>
+<figcaption>AuraDB Free: up to 200k nodes and 400k relationships. $0/hour. Note: auto-deleted after 30 days of inactivity — keep it active or export your data.</figcaption>
 </figure>
 
 
@@ -280,7 +280,7 @@ Name your instance `StarWars_Lego_DB` and click Create.
 </figure>
 
 
-âš ï¸ **Critical:** Aura shows your password exactly once. Click **Download and continue** before closing this screen â€” the downloaded file has your URI, username, and password.
+⚠️ **Critical:** Aura shows your password exactly once. Click **Download and continue** before closing this screen — the downloaded file has your URI, username, and password.
 
 
 <figure>
@@ -294,7 +294,7 @@ Within about 60 seconds your instance is running:
 
 <figure>
 <img src="ss25-instance-running.png" alt="Aura instances page showing StarWars_Lego_DB running with 0 nodes and 0 relationships">
-<figcaption>StarWars_Lego_DB â€” RUNNING. 0 nodes, 0 relationships. About to change.</figcaption>
+<figcaption>StarWars_Lego_DB — RUNNING. 0 nodes, 0 relationships. About to change.</figcaption>
 </figure>
 
 
@@ -326,7 +326,7 @@ Claude Code runs `import_aura.py` and reports back:
 </figure>
 
 
-Verify in the Aura Query editor â€” go to your instance, click **Connect â†’ Query**, and run the verification query Claude Code provides:
+Verify in the Aura Query editor — go to your instance, click **Connect → Query**, and run the verification query Claude Code provides:
 
 
 <figure>
@@ -351,7 +351,7 @@ The Rebrickable CSVs contain every LEGO set ever made. I asked Claude Code in pl
 Find all themes in the database that are related to Star Wars
 ```
 
-It wrote and ran a graph traversal query using the `HAS_PARENT` relationship hierarchy. Initial result: 2 themes. I pushed back â€” I knew there were more than two.
+It wrote and ran a graph traversal query using the `HAS_PARENT` relationship hierarchy. Initial result: 2 themes. I pushed back — I knew there were more than two.
 
 
 <figure>
@@ -359,25 +359,25 @@ It wrote and ran a graph traversal query using the `HAS_PARENT` relationship hie
 </figure>
 
 
-Claude Code investigated with a diagnostic script and found the bug: the original query's `NOT EXISTS` guard was too strict. There are actually 5 nodes named "Star Wars" in the data â€” the root theme plus sub-themes under Technic, Advent, and Mindstorms that were silently excluded.
+Claude Code investigated with a diagnostic script and found the bug: the original query's `NOT EXISTS` guard was too strict. There are actually 5 nodes named "Star Wars" in the data — the root theme plus sub-themes under Technic, Advent, and Mindstorms that were silently excluded.
 
 
 <figure>
 <img src="ss32-five-themes-found.png" alt="Five Star Wars themes table showing all ids and parent themes">
-<figcaption>All 5 Star Wars themes. The "hidden" three were Star Wars licensing applied to Technic, Advent calendars, and Mindstorms â€” children of those parent themes, not of the Star Wars root.</figcaption>
+<figcaption>All 5 Star Wars themes. The "hidden" three were Star Wars licensing applied to Technic, Advent calendars, and Mindstorms — children of those parent themes, not of the Star Wars root.</figcaption>
 </figure>
 
 
 I pushed back using nothing but domain knowledge. I didn't write a query. I didn't debug the code. I just knew there were more Star Wars themes and said so. The agent investigated, found its own mistake, and corrected it.
 
-*(I'd built this database once before and found 4 themes. Now there are 5 â€” Rebrickable updates daily. The data reflects the real world.)*
+*(I'd built this database once before and found 4 themes. Now there are 5 — Rebrickable updates daily. The data reflects the real world.)*
 
-Next I asked Claude Code to clear the database and re-import with a full filter chain â€” only items from all the CSVs that tie to Star Wars theme ids 158, 171, 18, 209, and 261 and their sets:
+Next I asked Claude Code to clear the database and re-import with a full filter chain — only items from all the CSVs that tie to Star Wars theme ids 158, 171, 18, 209, and 261 and their sets:
 
 
 <figure>
 <img src="ss34-filter-chain-code.png" alt="Filter chain code showing Python filtering each CSV before touching the database">
-<figcaption>The filter chain: themes â†’ sets â†’ inventories â†’ inventory_minifigs â†’ minifigs. Every CSV filtered in Python before a single node touches the database. Nothing non-Star Wars can leak in.</figcaption>
+<figcaption>The filter chain: themes → sets → inventories → inventory_minifigs → minifigs. Every CSV filtered in Python before a single node touches the database. Nothing non-Star Wars can leak in.</figcaption>
 </figure>
 
 
@@ -395,14 +395,14 @@ With the database clean and the data right, I asked:
 
 ```
 Since I don't know Cypher and I want to use the power of a Graph Database 
-where relationships are first class citizens â€” tell me which Star Wars set 
+where relationships are first class citizens — tell me which Star Wars set 
 has the most minifigures?
 ```
 
 
 <figure>
 <img src="ss36-death-star-answer.png" alt="Claude Code answer showing Death Star result with Cypher and plain English explanation">
-<figcaption>Winner: the 2008 Death Star (10188-1) with 48 minifigures across 23 distinct characters. The graph walked relationships directly â€” no table joins, no intermediate scans. The 2025 Death Star flips it: 39 distinct characters but only 40 total, meaning almost every minifig in that box is a different person.</figcaption>
+<figcaption>Winner: the 2008 Death Star (10188-1) with 48 minifigures across 23 distinct characters. The graph walked relationships directly — no table joins, no intermediate scans. The 2025 Death Star flips it: 39 distinct characters but only 40 total, meaning almost every minifig in that box is a different person.</figcaption>
 </figure>
 
 
@@ -411,16 +411,16 @@ Then I asked it to write a query to visualize it in Neo4j Browser. Paste the res
 
 <figure>
 <img src="ss37-death-star-graph.png" alt="Neo4j graph visualization showing Death Star as hub node with minifig nodes radiating out">
-<figcaption>The 2008 Death Star as a hub node with every minifig radiating out via INCLUDES_MINIFIG edges. Han Solo appears twice â€” two distinct minifig variants with different head molds. The graph captures that automatically.</figcaption>
+<figcaption>The 2008 Death Star as a hub node with every minifig radiating out via INCLUDES_MINIFIG edges. Han Solo appears twice — two distinct minifig variants with different head molds. The graph captures that automatically.</figcaption>
 </figure>
 
 
 
 ## What this actually gives you
 
-From five CSVs to a queryable, visualizable Star Wars graph â€” no Cypher knowledge required, no database needed to define the schema, and every query validated against a file that existed before the first node was written.
+From five CSVs to a queryable, visualizable Star Wars graph — no Cypher knowledge required, no database needed to define the schema, and every query validated against a file that existed before the first node was written.
 
-The workflow in one line: **define â†’ import â†’ query**, with the schema as ground truth the whole way through.
+The workflow in one line: **define → import → query**, with the schema as ground truth the whole way through.
 
 I started this wanting to answer one question: which Star Wars set has the most minifigures? I ended up contributing to an open source skill that makes the whole workflow possible for anyone starting from scratch.
 
